@@ -4,7 +4,7 @@
 
 A clean, interactive finance dashboard built with **React** for tracking income, expenses, and financial activity. Designed as a frontend-only project with mock data, role-based UI simulation, and persistent state.
 
-**Live Demo:** [fintrack.vercel.app](https://fintrack.vercel.app) · **Repository:** [github.com/anjany06/zorvyn_assignment](https://github.com/anjany06/zorvyn_assignment)
+**Live Demo:** [zorvyn-assignment-teal.vercel.app](https://zorvyn-assignment-teal.vercel.app/) · **Repository:** [github.com/anjany06/zorvyn_assignment](https://github.com/anjany06/zorvyn_assignment)
 
 ---
 
