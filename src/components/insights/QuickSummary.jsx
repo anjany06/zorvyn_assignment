@@ -13,21 +13,21 @@ export default function QuickSummary() {
     >
       <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">Quick Summary</h3>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="text-center p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
-          <p className="text-2xl font-bold text-gray-900 dark:text-white">{transactionCount}</p>
-          <p className="text-xs text-gray-500 mt-1">Total Transactions</p>
+        <div className="text-center p-3 bg-brand-500 dark:bg-gray-800/50 rounded-lg">
+          <p className="text-2xl font-bold text-white">{transactionCount}</p>
+          <p className="text-xs text-white mt-1">Total Transactions</p>
         </div>
-        <div className="text-center p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
-          <p className="text-2xl font-bold text-gray-900 dark:text-white">${avgTransaction.toFixed(0)}</p>
+        <div className="text-center p-3 bg-gray-200 dark:bg-gray-800/50 rounded-lg">
+          <p className="text-2xl font-bold text-gray-800 dark:text-white">${avgTransaction.toFixed(0)}</p>
           <p className="text-xs text-gray-500 mt-1">Avg. Expense</p>
         </div>
-        <div className="text-center p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
-          <p className="text-2xl font-bold text-emerald-500">${totalIncome.toLocaleString()}</p>
-          <p className="text-xs text-gray-500 mt-1">Total Income</p>
+        <div className="text-center p-3 bg-emerald-500 dark:bg-gray-800/50 rounded-lg">
+          <p className="text-2xl font-bold text-white">${totalIncome.toLocaleString()}</p>
+          <p className="text-xs text-white mt-1">Total Income</p>
         </div>
-        <div className="text-center p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
-          <p className="text-2xl font-bold text-rose-500">${totalExpenses.toLocaleString()}</p>
-          <p className="text-xs text-gray-500 mt-1">Total Spent</p>
+        <div className="text-center p-3 bg-rose-500 dark:bg-gray-800/50 rounded-lg">
+          <p className="text-2xl font-bold text-white">${totalExpenses.toLocaleString()}</p>
+          <p className="text-xs text-white mt-1">Total Spent</p>
         </div>
       </div>
     </motion.div>

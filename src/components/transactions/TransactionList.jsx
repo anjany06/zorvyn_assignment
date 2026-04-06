@@ -4,7 +4,7 @@ import { AppContext } from '../../context/AppContext'
 import { categories } from '../../data/mockData'
 import TransactionModal from './TransactionModal'
 import ConfirmModal from '../ui/ConfirmModal'
-import { Search, Plus, Trash2, Pencil, Download, SlidersHorizontal } from 'lucide-react'
+import { Search, Plus, Trash2, Pencil, Download, SlidersHorizontal, ChevronDown } from 'lucide-react'
 
 export default function TransactionList() {
   const { transactions, deleteTransaction, role } = useContext(AppContext)
@@ -139,37 +139,46 @@ export default function TransactionList() {
             className="overflow-hidden"
           >
             <div className="flex flex-wrap gap-3 p-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
-              <select
-                value={filterType}
-                onChange={(e) => setFilterType(e.target.value)}
-                className="px-3 py-1.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-brand-500"
-              >
-                <option value="all">All Types</option>
-                <option value="income">Income</option>
-                <option value="expense">Expense</option>
-              </select>
+              <div className="relative">
+                <select
+                  value={filterType}
+                  onChange={(e) => setFilterType(e.target.value)}
+                  className="pl-3 pr-8 py-1.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-brand-500 cursor-pointer appearance-none outline-none"
+                >
+                  <option value="all">All Types</option>
+                  <option value="income">Income</option>
+                  <option value="expense">Expense</option>
+                </select>
+                <ChevronDown size={14} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" />
+              </div>
 
-              <select
-                value={filterCategory}
-                onChange={(e) => setFilterCategory(e.target.value)}
-                className="px-3 py-1.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-brand-500"
-              >
-                <option value="all">All Categories</option>
-                {categories.map(cat => (
-                  <option key={cat} value={cat}>{cat}</option>
-                ))}
-              </select>
+              <div className="relative">
+                <select
+                  value={filterCategory}
+                  onChange={(e) => setFilterCategory(e.target.value)}
+                  className="pl-3 pr-8 py-1.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-brand-500 cursor-pointer appearance-none outline-none"
+                >
+                  <option value="all">All Categories</option>
+                  {categories.map(cat => (
+                    <option key={cat} value={cat}>{cat}</option>
+                  ))}
+                </select>
+                <ChevronDown size={14} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" />
+              </div>
 
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="px-3 py-1.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-brand-500"
-              >
-                <option value="date-desc">Newest First</option>
-                <option value="date-asc">Oldest First</option>
-                <option value="amount-desc">Highest Amount</option>
-                <option value="amount-asc">Lowest Amount</option>
-              </select>
+              <div className="relative">
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                  className="pl-3 pr-8 py-1.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-brand-500 cursor-pointer appearance-none outline-none"
+                >
+                  <option value="date-desc">Newest First</option>
+                  <option value="date-asc">Oldest First</option>
+                  <option value="amount-desc">Highest Amount</option>
+                  <option value="amount-asc">Lowest Amount</option>
+                </select>
+                <ChevronDown size={14} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" />
+              </div>
             </div>
           </motion.div>
         )}
@@ -191,53 +200,91 @@ export default function TransactionList() {
           </div>
         ) : (
           <div className="divide-y divide-gray-100 dark:divide-gray-800">
-            {filtered.map((t, i) => (
-              <motion.div
-                key={t.id}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: Math.min(i * 0.03, 0.3) }}
-                className="grid grid-cols-1 sm:grid-cols-12 gap-1 sm:gap-2 px-5 py-3 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
-              >
-                <span className="sm:col-span-2 text-xs text-gray-500 dark:text-gray-400">
-                  {new Date(t.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-                </span>
-                <span className="sm:col-span-4 text-sm font-medium text-gray-900 dark:text-white">
-                  {t.description}
-                </span>
-                <span className="sm:col-span-2">
-                  <span className="inline-block px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400">
-                    {t.category}
+            {filtered.map((t, i) => {
+              const isIncome = t.type === 'income'
+              const formattedDate = new Date(t.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+              const amountClass = isIncome ? 'text-emerald-500' : 'text-rose-500'
+              const amountText = `${isIncome ? '+' : '-'}$${t.amount.toFixed(2)}`
+
+              return (
+                <motion.div
+                  key={t.id}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: Math.min(i * 0.03, 0.3) }}
+                  className={`flex flex-col sm:grid sm:grid-cols-12 sm:items-center gap-1 sm:gap-2 px-4 sm:px-5 py-3 transition-colors ${
+                    i % 2 !== 0 ? 'bg-gray-100/80 dark:bg-gray-800/30' : 'bg-transparent'
+                  } hover:bg-gray-200 dark:hover:bg-gray-800/70`}
+                >
+                  {/* --- Mobile Layout (Hidden on Desktop) --- */}
+                  <div className="flex justify-between items-center sm:hidden">
+                    <span className="text-sm font-medium text-gray-900 dark:text-white truncate pr-2">
+                      {t.description}
+                    </span>
+                    <span className={`text-sm font-semibold whitespace-nowrap ${amountClass}`}>
+                      {amountText}
+                    </span>
+                  </div>
+
+                  <div className="flex justify-between items-center sm:hidden mt-0.5">
+                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                      {formattedDate}
+                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="inline-block px-2 py-0.5 rounded-full text-[10px] font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400">
+                        {t.category}
+                      </span>
+                      {role === 'admin' && (
+                        <div className="flex items-center gap-1 ml-1 border-l border-gray-200 dark:border-gray-700 pl-2">
+                          <button onClick={() => openEdit(t)} className="p-1 rounded text-gray-400 hover:text-brand-600">
+                            <Pencil size={14} />
+                          </button>
+                          <button onClick={() => setDeletingId(t.id)} className="p-1 rounded text-gray-400 hover:text-rose-500">
+                            <Trash2 size={14} />
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* --- Desktop Layout (Hidden on Mobile) --- */}
+                  <span className="hidden sm:block sm:col-span-2 text-xs text-gray-500 dark:text-gray-400">
+                    {formattedDate}
                   </span>
-                </span>
-                <span className={`sm:col-span-2 text-sm font-semibold sm:text-right ${
-                  t.type === 'income' ? 'text-emerald-500' : 'text-rose-500'
-                }`}>
-                  {t.type === 'income' ? '+' : '-'}${t.amount.toFixed(2)}
-                </span>
-                <span className="sm:col-span-2 flex justify-end gap-1">
-                  {/* Edit and delete only visible to admin */}
-                  {role === 'admin' && (
-                    <>
-                      <button
-                        onClick={() => openEdit(t)}
-                        className="p-1 rounded text-gray-400 hover:text-brand-600 hover:bg-brand-50 dark:hover:bg-brand-900/20 transition-colors"
-                        title="Edit"
-                      >
-                        <Pencil size={14} />
-                      </button>
-                      <button
-                        onClick={() => setDeletingId(t.id)}
-                        className="p-1 rounded text-gray-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/20 transition-colors"
-                        title="Delete"
-                      >
-                        <Trash2 size={14} />
-                      </button>
-                    </>
-                  )}
-                </span>
-              </motion.div>
-            ))}
+                  <span className="hidden sm:block sm:col-span-4 text-sm font-medium text-gray-900 dark:text-white truncate pr-4">
+                    {t.description}
+                  </span>
+                  <span className="hidden sm:block sm:col-span-2">
+                    <span className="inline-block px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400">
+                      {t.category}
+                    </span>
+                  </span>
+                  <span className={`hidden sm:block sm:col-span-2 text-sm font-semibold text-right w-full ${amountClass}`}>
+                    {amountText}
+                  </span>
+                  <span className="hidden sm:flex sm:col-span-2 justify-end gap-1">
+                    {role === 'admin' && (
+                      <>
+                        <button
+                          onClick={() => openEdit(t)}
+                          className="p-1.5 rounded text-gray-400 hover:text-brand-600 hover:bg-brand-50 dark:hover:bg-brand-900/20 transition-colors"
+                          title="Edit"
+                        >
+                          <Pencil size={14} />
+                        </button>
+                        <button
+                          onClick={() => setDeletingId(t.id)}
+                          className="p-1.5 rounded text-gray-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/20 transition-colors"
+                          title="Delete"
+                        >
+                          <Trash2 size={14} />
+                        </button>
+                      </>
+                    )}
+                  </span>
+                </motion.div>
+              )
+            })}
           </div>
         )}
       </div>
