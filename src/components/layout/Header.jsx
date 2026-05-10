@@ -1,19 +1,27 @@
-import { useContext } from 'react'
-import { useLocation } from 'react-router-dom'
-import { AppContext } from '../../context/AppContext'
-import { Menu, Shield, Eye, Bell, UserCircle, PanelLeftClose, PanelLeftOpen } from 'lucide-react'
+import { useContext } from "react";
+import { useLocation } from "react-router-dom";
+import { AppContext } from "../../context/AppContext";
+import {
+  Menu,
+  Shield,
+  Eye,
+  Bell,
+  UserCircle,
+  PanelLeftClose,
+  PanelLeftOpen,
+} from "lucide-react";
 
 const pageTitles = {
-  '/': 'Dashboard',
-  '/transactions': 'Transactions',
-  '/insights': 'Insights',
-}
+  "/": "Dashboard",
+  "/transactions": "Transactions",
+  "/insights": "Insights",
+};
 
 export default function Header({ onMenuClick, isCollapsed, setIsCollapsed }) {
-  const { role } = useContext(AppContext)
-  const location = useLocation()
+  const { role } = useContext(AppContext);
+  const location = useLocation();
 
-  const title = pageTitles[location.pathname] || 'Dashboard'
+  const title = pageTitles[location.pathname] || "Dashboard";
 
   return (
     <header className="sticky top-0 z-30 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 py-3 lg:py-4">
@@ -25,15 +33,19 @@ export default function Header({ onMenuClick, isCollapsed, setIsCollapsed }) {
           >
             <Menu size={20} />
           </button>
-          
+
           <button
             onClick={() => setIsCollapsed(!isCollapsed)}
             className="hidden lg:flex p-1.5 rounded-lg text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             title="Toggle Sidebar"
           >
-            {isCollapsed ? <PanelLeftOpen size={20} /> : <PanelLeftClose size={20} />}
+            {isCollapsed ? (
+              <PanelLeftOpen size={20} />
+            ) : (
+              <PanelLeftClose size={20} />
+            )}
           </button>
-          
+
           <h1 className="text-2xl font-heading text-gray-900 dark:text-white leading-none mt-1">
             {title}
           </h1>
@@ -42,13 +54,17 @@ export default function Header({ onMenuClick, isCollapsed, setIsCollapsed }) {
         {/* Centered Welcome Message */}
         <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
           <p className="text-sm font-medium text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800 px-4 py-1.5 rounded-full border border-gray-100 dark:border-gray-700 shadow-[0_1px_3px_rgba(0,0,0,0.02)] flex items-center gap-2">
-            Welcome back, User <span className="text-lg leading-none">👋</span>
+            Welcome back, User
+            <span className="flex items-center gap-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+              Live
+            </span>
           </p>
         </div>
 
         <div className="flex items-center gap-4">
           <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-100 dark:bg-gray-800">
-            {role === 'admin' ? (
+            {role === "admin" ? (
               <Shield size={14} className="text-brand-600" />
             ) : (
               <Eye size={14} className="text-gray-500" />
@@ -70,5 +86,5 @@ export default function Header({ onMenuClick, isCollapsed, setIsCollapsed }) {
         </div>
       </div>
     </header>
-  )
+  );
 }
