@@ -1,19 +1,27 @@
-import { useContext } from 'react'
-import { useLocation } from 'react-router-dom'
-import { AppContext } from '../../context/AppContext'
-import { Menu, Shield, Eye, Bell, UserCircle, PanelLeftClose, PanelLeftOpen } from 'lucide-react'
+import { useContext } from "react";
+import { useLocation } from "react-router-dom";
+import { AppContext } from "../../context/AppContext";
+import {
+  Menu,
+  Shield,
+  Eye,
+  Bell,
+  UserCircle,
+  PanelLeftClose,
+  PanelLeftOpen,
+} from "lucide-react";
 
 const pageTitles = {
-  '/': 'Dashboard',
-  '/transactions': 'Transactions',
-  '/insights': 'Insights',
-}
+  "/": "Dashboard",
+  "/transactions": "Transactions",
+  "/insights": "Insights",
+};
 
 export default function Header({ onMenuClick, isCollapsed, setIsCollapsed }) {
-  const { role } = useContext(AppContext)
-  const location = useLocation()
+  const { role } = useContext(AppContext);
+  const location = useLocation();
 
-  const title = pageTitles[location.pathname] || 'Dashboard'
+  const title = pageTitles[location.pathname] || "Dashboard";
 
   return (
     <header className="sticky top-0 z-30 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 py-3 lg:py-4">
@@ -25,15 +33,19 @@ export default function Header({ onMenuClick, isCollapsed, setIsCollapsed }) {
           >
             <Menu size={20} />
           </button>
-          
+
           <button
             onClick={() => setIsCollapsed(!isCollapsed)}
             className="hidden lg:flex p-1.5 rounded-lg text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             title="Toggle Sidebar"
           >
-            {isCollapsed ? <PanelLeftOpen size={20} /> : <PanelLeftClose size={20} />}
+            {isCollapsed ? (
+              <PanelLeftOpen size={20} />
+            ) : (
+              <PanelLeftClose size={20} />
+            )}
           </button>
-          
+
           <h1 className="text-2xl font-heading text-gray-900 dark:text-white leading-none mt-1">
             {title}
           </h1>
@@ -48,7 +60,7 @@ export default function Header({ onMenuClick, isCollapsed, setIsCollapsed }) {
 
         <div className="flex items-center gap-4">
           <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-100 dark:bg-gray-800">
-            {role === 'admin' ? (
+            {role === "admin" ? (
               <Shield size={14} className="text-brand-600" />
             ) : (
               <Eye size={14} className="text-gray-500" />
@@ -61,7 +73,7 @@ export default function Header({ onMenuClick, isCollapsed, setIsCollapsed }) {
           <div className="flex items-center gap-2 sm:gap-3">
             <button className="relative p-2 rounded-full text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
               <Bell size={20} />
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 border border-white dark:border-gray-900 rounded-full"></span>
+              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 border border-white dark:border-gray-900 rounded-full pulse-dot"></span>
             </button>
             <button className="p-1 rounded-full text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">
               <UserCircle size={28} />
@@ -70,5 +82,5 @@ export default function Header({ onMenuClick, isCollapsed, setIsCollapsed }) {
         </div>
       </div>
     </header>
-  )
+  );
 }
